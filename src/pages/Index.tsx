@@ -352,7 +352,7 @@ const Index = () => {
                 <p className="text-muted-foreground text-lg sm:text-xl leading-relaxed mb-8 sm:mb-12">
                   {t("From initial assessment to final grid connection, we handle everything for a stress-free transition to solar.", "प्रारंभिक मूल्यांकन से लेकर अंतिम ग्रिड कनेक्शन तक, हम सब कुछ संभालते हैं।")}
                 </p>
-                <div className="aspect-[4/5] rounded-[2rem] sm:rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white relative group max-w-md mx-auto lg:mx-0">
+                <div className="aspect-[4/5] w-full max-w-2xl rounded-[2rem] sm:rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white relative group mx-auto lg:mx-0">
                   <img src={WHY_CHOOSE_US_IMAGE} alt="Solar Technical Installation" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-950/75 via-transparent to-transparent flex flex-col justify-end p-8 sm:p-12 text-white">
                     <p className="text-2xl sm:text-3xl font-heading font-black mb-1 sm:mb-2">UPNEDA</p>

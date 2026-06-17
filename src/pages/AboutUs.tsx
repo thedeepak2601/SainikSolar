@@ -6,26 +6,36 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import consultancyImg from "@/assets/solar_consultancy_1772175242455.png";
 import professionalHero from "@/assets/professional-hero.png";
 
+type Brand = {
+  name: string;
+  logo?: string;
+  wordmark: string;
+  color: string;
+  bg: string;
+};
+
 const AboutUs = () => {
   const { t } = useLanguage();
 
-  const brandsRow1 = [
-    { name: "Tata Power Solar", logo: "/logos/tata-solar.png", bg: "bg-white" },
-    { name: "Adani Solar", logo: "/logos/adani-solar.svg", bg: "bg-white" },
-    { name: "Waaree", logo: "/logos/waaree.png", bg: "bg-white" },
-    { name: "UTL Solar", logo: "/logos/utl-solar.png", bg: "bg-white" },
-    { name: "Tata", logo: "/logos/tata.png", bg: "bg-white" },
-    { name: "Polycab", logo: null, wordmark: "POLYCAB", color: "#e71c24", bg: "bg-red-50" },
+  const brandsRow1: Brand[] = [
+    { name: "Tata Power Solar", logo: "/logos/tata-power-solar-official.jpg", wordmark: "Tata Power Solar", color: "#486aa8", bg: "bg-white" },
+    { name: "Adani Solar", logo: "/logos/adani-solar.svg", wordmark: "Adani Solar", color: "#111827", bg: "bg-white" },
+    { name: "Waaree", logo: "/logos/waaree.png", wordmark: "WAAREE", color: "#2da84a", bg: "bg-white" },
+    { name: "UTL Solar", logo: "/logos/utl-official.png", wordmark: "UTL Solar", color: "#d71920", bg: "bg-white" },
+    { name: "Tata", logo: "/logos/tata.png", wordmark: "TATA", color: "#486aa8", bg: "bg-white" },
+    { name: "Polycab", logo: "/logos/polycab-official.png", wordmark: "POLYCAB", color: "#e71c24", bg: "bg-red-50" },
+    { name: "Sundak", logo: "/logos/sundak-official.gif", wordmark: "SUNDAK", color: "#f97316", bg: "bg-orange-50" },
   ];
 
-  const brandsRow2 = [
-    { name: "Luminous", logo: null, wordmark: "luminous", color: "#0071b9", bg: "bg-blue-50" },
-    { name: "V-Guard", logo: null, wordmark: "V-Guard", color: "#ff6b00", bg: "bg-orange-50" },
-    { name: "Exide", logo: null, wordmark: "EXIDE", color: "#003087", bg: "bg-blue-50" },
-    { name: "Microtek", logo: null, wordmark: "microtek", color: "#c8192b", bg: "bg-red-50" },
-    { name: "Loom Solar", logo: null, wordmark: "Loom Solar", color: "#2da84a", bg: "bg-green-50" },
-    { name: "Pahal", logo: null, wordmark: "PAHAL", color: "#1a1a1a", bg: "bg-gray-50" },
-    { name: "Jakson", logo: null, wordmark: "Jakson", color: "#004b8d", bg: "bg-blue-50" },
+  const brandsRow2: Brand[] = [
+    { name: "Luminous", logo: "/logos/luminous-official.webp", wordmark: "luminous", color: "#0071b9", bg: "bg-blue-50" },
+    { name: "V-Guard", logo: "/logos/vguard-official.jpg", wordmark: "V-Guard", color: "#ff6b00", bg: "bg-orange-50" },
+    { name: "Exide", logo: "/logos/exide-official.png", wordmark: "EXIDE", color: "#003087", bg: "bg-blue-50" },
+    { name: "Microtek", logo: "/logos/microtek-official.svg", wordmark: "microtek", color: "#c8192b", bg: "bg-red-50" },
+    { name: "Loom Solar", logo: "/logos/loom-solar-official.png", wordmark: "Loom Solar", color: "#2da84a", bg: "bg-green-50" },
+    { name: "Pahal", logo: "/logos/pahal-official.jpg", wordmark: "PAHAL", color: "#1a1a1a", bg: "bg-gray-50" },
+    { name: "Jakson", logo: "/logos/jakson-official.png", wordmark: "Jakson", color: "#004b8d", bg: "bg-blue-50" },
+    { name: "Electrower", logo: "/logos/electrower-official.png", wordmark: "Electrower", color: "#16a34a", bg: "bg-green-50" },
   ];
 
   const stats = [
@@ -56,6 +66,30 @@ const AboutUs = () => {
     { year: "2023", event: t("1500+ Projects Completed", "1500+ प्रोजेक्ट्स पूर्ण") },
     { year: "2025", event: t("2000+ Installations & 3 Offices", "2000+ इंस्टॉलेशन और 3 कार्यालय") },
   ];
+
+  const renderBrandLogo = (brand: Brand) => (
+    <>
+      {brand.logo && (
+        <img
+          src={brand.logo}
+          alt={`${brand.name} logo`}
+          className="max-h-16 max-w-[170px] w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+          onError={(event) => {
+            const image = event.currentTarget;
+            image.style.display = "none";
+            const fallback = image.nextElementSibling as HTMLElement | null;
+            if (fallback) fallback.style.display = "inline-block";
+          }}
+        />
+      )}
+      <span
+        className={`font-black text-lg tracking-tight leading-none group-hover:scale-105 transition-transform duration-300 ${brand.logo ? "hidden" : "inline-block"}`}
+        style={{ color: brand.color }}
+      >
+        {brand.wordmark}
+      </span>
+    </>
+  );
 
   return (
     <div>
@@ -135,7 +169,7 @@ const AboutUs = () => {
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 lg:gap-20 items-center relative z-10">
             <AnimatedSection direction="left">
-              <div className="relative group max-w-md mx-auto lg:mx-0">
+              <div className="relative group w-full max-w-2xl mx-auto lg:mx-0">
                 <div className="absolute -inset-5 rounded-[3rem] bg-gradient-to-br from-primary/20 via-white to-secondary/20 blur-2xl" />
                 <div className="aspect-[4/5] rounded-[2rem] sm:rounded-[3rem] overflow-hidden shadow-2xl border-4 sm:border-8 border-white relative z-10">
                   <img src={consultancyImg} alt="Solar Consultancy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
@@ -368,15 +402,6 @@ const AboutUs = () => {
               {t("We work with India's top solar equipment manufacturers to ensure quality.", "हम गुणवत्ता सुनिश्चित करने के लिए भारत के शीर्ष सोलर उपकरण निर्माताओं के साथ काम करते हैं।")}
             </p>
           </AnimatedSection>
-          <AnimatedSection delay={0.1} direction="up" className="mb-10">
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-5xl mx-auto">
-              {brandsRow1.filter((brand) => brand.logo).map((brand) => (
-                <div key={brand.name} className="group flex h-28 items-center justify-center rounded-3xl border border-primary/10 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-xl">
-                  <img src={brand.logo!} alt={`${brand.name} logo`} className="max-h-14 max-w-full object-contain transition-transform duration-300 group-hover:scale-105" />
-                </div>
-              ))}
-            </div>
-          </AnimatedSection>
         </div>
 
         {/* 2-Row Marquee Ticker */}
@@ -394,21 +419,7 @@ const AboutUs = () => {
                   className={`flex-shrink-0 flex flex-col items-center justify-center gap-3 ${brand.bg} rounded-3xl border border-border/50 hover:border-primary/30 hover:shadow-xl transition-all duration-300 cursor-default group`}
                   style={{ width: 210, height: 124, padding: "18px 24px" }}
                 >
-                  {brand.logo ? (
-                    <img
-                      src={brand.logo}
-                      alt={`${brand.name} logo`}
-                      className="max-h-14 max-w-[150px] w-auto object-contain group-hover:scale-105 transition-transform duration-300"
-                      onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
-                    />
-                  ) : (
-                    <span
-                      className="font-black text-lg tracking-tight leading-none group-hover:scale-105 transition-transform duration-300 inline-block"
-                      style={{ color: brand.color }}
-                    >
-                      {brand.wordmark}
-                    </span>
-                  )}
+                  {renderBrandLogo(brand)}
                   <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">
                     {t("Authorized", "अधिकृत")}
                   </span>
@@ -428,21 +439,7 @@ const AboutUs = () => {
                   className={`flex-shrink-0 flex flex-col items-center justify-center gap-3 ${brand.bg} rounded-3xl border border-border/50 hover:border-primary/30 hover:shadow-xl transition-all duration-300 cursor-default group`}
                   style={{ width: 210, height: 124, padding: "18px 24px" }}
                 >
-                  {brand.logo ? (
-                    <img
-                      src={brand.logo}
-                      alt={`${brand.name} logo`}
-                      className="max-h-14 max-w-[150px] w-auto object-contain group-hover:scale-105 transition-transform duration-300"
-                      onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
-                    />
-                  ) : (
-                    <span
-                      className="font-black text-lg tracking-tight leading-none group-hover:scale-105 transition-transform duration-300 inline-block"
-                      style={{ color: brand.color }}
-                    >
-                      {brand.wordmark}
-                    </span>
-                  )}
+                  {renderBrandLogo(brand)}
                   <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">
                     {t("Authorized", "अधिकृत")}
                   </span>

@@ -52,9 +52,9 @@ const Navbar = () => {
     <nav className="sticky top-0 left-0 right-0 z-50">
       <TopBar isVisible={showTopBar} />
       <div className="bg-card/95 backdrop-blur-xl border-b border-border/50 shadow-sm">
-        <div className="container mx-auto flex items-center justify-between h-24 px-4">
+        <div className="container mx-auto flex items-center justify-between h-16 px-4 md:h-20">
           <Link to="/" className="flex items-center gap-3 group">
-            <img src="/logo.png" alt="Sainik Solar Logo" className="h-12 md:h-16 object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-sm" />
+            <img src="/logo.png" alt="Sainik Solar Logo" className="h-10 object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-sm md:h-14" />
           </Link>
 
           <div className="hidden xl:flex items-center gap-1">
@@ -131,7 +131,7 @@ const Navbar = () => {
           </div>
 
           <button className="xl:hidden" onClick={() => setOpen(!open)}>
-            {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {open ? <X className="h-5 w-5 md:h-6 md:w-6" /> : <Menu className="h-5 w-5 md:h-6 md:w-6" />}
           </button>
         </div>
 

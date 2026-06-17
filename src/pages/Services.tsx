@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { Zap, Shield, TrendingUp, Users, GraduationCap, Wrench, CheckCircle, ArrowRight, Phone, Award, Star, IndianRupee, Clock, HeartHandshake } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -12,6 +14,7 @@ import maintenanceImg from "@/assets/solar-maintenance-premium.png";
 
 const Services = () => {
   const { t } = useLanguage();
+  const [activeHero, setActiveHero] = useState(0);
 
   const services = [
     {
@@ -130,53 +133,149 @@ const Services = () => {
     { icon: Wrench, label: t("Maintenance", "रखरखाव"), sub: t("AMC Support", "AMC सपोर्ट"), link: "/services/maintenance" },
   ];
 
+  const heroSlides = [
+    {
+      kicker: t("End-to-End Solutions", "सम्पूर्ण समाधान"),
+      title: t("Our Solar Services", "हमारी सोलर सेवाएं"),
+      subtitle: t("From site survey to commissioning — we handle every step of your solar journey with certified engineers.", "साइट सर्वे से कमीशनिंग तक — प्रमाणित इंजीनियरों के साथ आपकी सोलर यात्रा का हर कदम हम संभालते हैं।"),
+      image: professionalHero,
+      range: "6 Services",
+      chips: [t("Free Assessment", "निःशुल्क मूल्यांकन"), t("Certified Engineers", "Certified Engineers"), t("End-to-End", "End-to-End")],
+      featured: ecosystem,
+      gradient: "from-gray-950 via-slate-950 to-emerald-950",
+    },
+    {
+      kicker: t("Professional Setup", "पेशेवर सेटअप"),
+      title: t("Solar Installation", "Solar Installation"),
+      subtitle: t("Residential, commercial and industrial solar installation with survey, design, mounting, wiring and net metering.", "Residential, commercial और industrial solar installation survey, design, mounting, wiring और net metering के साथ।"),
+      image: installationImg,
+      range: "1-3 Days",
+      chips: [t("Residential", "आवासीय"), t("Commercial", "व्यावसायिक"), t("Industrial", "औद्योगिक")],
+      featured: ecosystem.slice(0, 4),
+      gradient: "from-blue-950 via-slate-950 to-gray-950",
+    },
+    {
+      kicker: t("Expert Advice", "विशेषज्ञ सलाह"),
+      title: t("Consultancy & Audit", "Consultancy और Audit"),
+      subtitle: t("Energy audit, ROI calculation, brand selection and system sizing before your final quotation.", "Final quotation से पहले energy audit, ROI calculation, brand selection और system sizing।"),
+      image: consultancyImg,
+      range: "ROI Ready",
+      chips: [t("Energy Audit", "ऊर्जा ऑडिट"), t("ROI", "ROI"), t("Design", "Design")],
+      featured: [ecosystem[1], ecosystem[0], ecosystem[2], ecosystem[5]],
+      gradient: "from-purple-950 via-slate-950 to-blue-950",
+    },
+    {
+      kicker: t("Government Support", "सरकारी सहायता"),
+      title: t("Subsidy Assistance", "Subsidy Assistance"),
+      subtitle: t("Complete PM Surya Ghar Yojana application support, UPNEDA coordination and DISCOM paperwork.", "PM Surya Ghar Yojana application support, UPNEDA coordination और DISCOM paperwork।"),
+      image: subsidyImg,
+      range: "Up to ₹1.08L",
+      chips: [t("PM Surya Ghar", "PM Surya Ghar"), t("UPNEDA", "UPNEDA"), t("Paperwork", "Paperwork")],
+      featured: [ecosystem[2], ecosystem[1], ecosystem[0], ecosystem[5]],
+      gradient: "from-green-950 via-slate-950 to-orange-950",
+    },
+    {
+      kicker: t("Partner Setup", "पार्टनर सेटअप"),
+      title: t("Franchise Growth", "Franchise Growth"),
+      subtitle: t("Training, tools, brand support and leads for partners starting a solar business in Uttar Pradesh.", "Uttar Pradesh में solar business शुरू करने वाले partners के लिए training, tools, brand support और leads।"),
+      image: franchiseImg,
+      range: "Partner Model",
+      chips: [t("Training", "प्रशिक्षण"), t("Lead Support", "Lead Support"), t("Brand Support", "Brand Support")],
+      featured: [ecosystem[3], ecosystem[4], ecosystem[1], ecosystem[0]],
+      gradient: "from-orange-950 via-slate-950 to-zinc-950",
+    },
+    {
+      kicker: t("After Sales Support", "After Sales Support"),
+      title: t("Training & Maintenance", "Training और Maintenance"),
+      subtitle: t("Workshops, AMC plans, scheduled cleaning, inverter checks and performance reporting after installation.", "Installation के बाद workshops, AMC plans, cleaning, inverter checks और performance reporting।"),
+      image: maintenanceImg,
+      range: "AMC Support",
+      chips: [t("Workshops", "Workshops"), t("AMC", "AMC"), t("Performance", "Performance")],
+      featured: [ecosystem[4], ecosystem[5], ecosystem[0], ecosystem[1]],
+      gradient: "from-cyan-950 via-slate-950 to-yellow-950",
+    },
+  ];
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveHero((current) => (current + 1) % heroSlides.length);
+    }, 4500);
+
+    return () => window.clearInterval(timer);
+  }, [heroSlides.length]);
+
   return (
     <div>
       {/* Hero */}
-      <section className="relative min-h-[85vh] flex items-center pt-32 pb-20 overflow-hidden bg-gray-950 text-white">
-        <div className="absolute inset-0">
-          <img src={professionalHero} alt="Solar Services" className="w-full h-full object-cover opacity-30 scale-105" />
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-950 via-gray-950/80 to-transparent" />
-        </div>
-        <div className="container mx-auto px-4 relative z-10 py-20">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <AnimatedSection direction="left">
-              <span className="inline-block px-4 py-1 rounded-full bg-primary/20 text-primary border border-primary/30 text-xs font-black tracking-[0.2em] uppercase mb-6">
-                {t("End-to-End Solutions", "सम्पूर्ण समाधान")}
-              </span>
-              <h1 className="text-5xl md:text-7xl font-heading font-black mb-6 leading-tight">
-                {t("Our Solar", "हमारी")} <span className="text-primary">{t("Services", "सेवाएं")}</span>
-              </h1>
-              <p className="text-xl md:text-2xl opacity-80 leading-relaxed font-medium mb-10 max-w-xl">
-                {t("From site survey to commissioning — we handle every step of your solar journey with certified engineers.", "साइट सर्वे से कमीशनिंग तक — प्रमाणित इंजीनियरों के साथ आपकी सोलर यात्रा का हर कदम हम संभालते हैं।")}
-              </p>
+      <section className="relative overflow-hidden bg-slate-950 text-white">
+        <div className="relative h-[350px] sm:h-[410px] lg:h-[500px] xl:h-[590px]">
+          {heroSlides.map((slide, index) => (
+            <div
+              key={slide.title}
+              className={`absolute inset-0 bg-gradient-to-br ${slide.gradient} transition-opacity duration-700 ${activeHero === index ? "opacity-100" : "opacity-0"}`}
+              aria-hidden={activeHero !== index}
+            >
+              <img src={slide.image} alt="" className="absolute inset-0 h-full w-full object-cover opacity-24 mix-blend-screen" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/68 via-black/35 to-transparent" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_34%,rgba(255,255,255,0.16),transparent_34%)]" />
 
-              <div className="flex flex-wrap gap-4 mb-4">
-                <Link to="/consultation" className="inline-flex items-center gap-3 rounded-full bg-primary text-gray-900 px-8 py-4 font-black text-lg hover:bg-white transition-all shadow-[0_10px_30px_rgba(249,115,22,0.3)]">
-                  {t("Free Assessment", "निःशुल्क मूल्यांकन")} <ArrowRight className="w-5 h-5" />
-                </Link>
-                <a href="tel:+918433284427" className="inline-flex items-center gap-3 rounded-full border-2 border-white/20 px-8 py-4 font-black text-lg hover:bg-white/10 transition-all">
-                  <Phone className="w-5 h-5" /> +91 8433284427
-                </a>
-              </div>
-            </AnimatedSection>
+              <div className="container relative z-10 mx-auto grid h-full grid-cols-1 items-center gap-6 px-4 md:grid-cols-[1fr_0.95fr]">
+                <motion.div
+                  initial={false}
+                  animate={activeHero === index ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+                  transition={{ duration: 0.45 }}
+                  className="max-w-3xl"
+                >
+                  <span className="mb-4 inline-block rounded-full border border-primary/35 bg-primary/20 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-primary md:text-sm">
+                    {slide.kicker}
+                  </span>
+                  <h1 className="text-4xl font-heading font-black leading-[0.95] md:text-6xl xl:text-7xl">
+                    {slide.title}
+                  </h1>
+                  <p className="mt-4 max-w-2xl text-base font-semibold leading-relaxed text-white/82 md:text-xl">
+                    {slide.subtitle}
+                  </p>
+                  <div className="mt-5 inline-flex rounded-xl border border-white/35 bg-white/10 px-5 py-2 text-2xl font-black shadow-[0_0_18px_rgba(255,255,255,0.18)] backdrop-blur md:text-4xl">
+                    {slide.range}
+                  </div>
+                  <div className="mt-5 hidden flex-wrap gap-3 sm:flex">
+                    {slide.chips.map((chip) => (
+                      <span key={chip} className="rounded-xl border border-white/25 bg-white/10 px-4 py-2 text-sm font-bold text-white/90 backdrop-blur">
+                        {chip}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
 
-            {/* Ecosystem Grid — High Density Professional Look */}
-            <AnimatedSection direction="right" className="bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-[3rem] p-8 md:p-12 shadow-2xl">
-              <div className="grid grid-cols-2 gap-6 md:gap-8">
-                {ecosystem.map((item, i) => (
-                  <Link key={i} to={item.link} className="group flex items-center gap-4 hover:scale-105 transition-all duration-300">
-                    <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-all">
-                      <item.icon className="w-6 h-6 md:w-8 md:h-8 text-primary group-hover:text-gray-900 transition-colors" />
-                    </div>
-                    <div>
-                      <p className="font-heading font-black text-white text-base md:text-xl leading-tight group-hover:text-primary transition-colors">{item.label}</p>
-                      <p className="text-white/40 text-[10px] md:text-xs font-bold uppercase tracking-widest mt-0.5">{item.sub}</p>
-                    </div>
-                  </Link>
-                ))}
+                <div className="hidden rounded-[2rem] border border-white/10 bg-white/[0.06] p-6 shadow-2xl backdrop-blur-xl md:block">
+                  <div className="grid grid-cols-2 gap-5">
+                    {slide.featured.map((item) => (
+                      <Link key={`${slide.title}-${item.label}`} to={item.link} className="group flex items-center gap-4 rounded-2xl bg-white/5 p-4 transition hover:bg-white/10">
+                        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 transition group-hover:bg-primary">
+                          <item.icon className="h-7 w-7 text-primary transition group-hover:text-gray-950" />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="truncate text-lg font-heading font-black text-white group-hover:text-primary">{item.label}</p>
+                          <p className="mt-1 truncate text-[10px] font-bold uppercase tracking-widest text-white/45">{item.sub}</p>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               </div>
-            </AnimatedSection>
+            </div>
+          ))}
+
+          <div className="absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3">
+            {heroSlides.map((slide, index) => (
+              <button
+                key={slide.title}
+                type="button"
+                onClick={() => setActiveHero(index)}
+                className={`h-3 w-3 rounded-full border-2 border-white transition-all ${activeHero === index ? "bg-transparent ring-2 ring-white/70" : "bg-white"}`}
+                aria-label={`Show services banner ${index + 1}`}
+              />
+            ))}
           </div>
         </div>
       </section>

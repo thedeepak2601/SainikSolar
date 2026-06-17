@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ClipboardCheck, PenTool, Wrench, Zap, Phone, ArrowRight, FileText, HelpCircle, CheckCircle, Award, Star, IndianRupee, Sun } from "lucide-react";
@@ -7,6 +8,7 @@ import subsidyImg from "@/assets/solar_subsidy_gov_1772175258947.png";
 
 const HowItWorks = () => {
   const { t } = useLanguage();
+  const [activeHero, setActiveHero] = useState(0);
 
   const steps = [
     { num: "01", icon: Phone, title: t("Contact Us & Book Free Consultation", "हमसे संपर्क करें और मुफ्त परामर्श बुक करें"), desc: t("Call us at +91 8433284427 or fill the online form. Our expert will schedule a free consultation to understand your energy needs, budget, and property details.", "हमें +91 8433284427 पर कॉल करें या ऑनलाइन फॉर्म भरें। हमारे विशेषज्ञ आपकी ऊर्जा ज़रूरतों, बजट और संपत्ति विवरण को समझने के लिए निःशुल्क परामर्श शेड्यूल करेंगे।"), color: "bg-blue-500" },
@@ -32,37 +34,134 @@ const HowItWorks = () => {
     { q: t("Can I get solar on EMI?", "क्या मैं EMI पर सोलर ले सकता हूँ?"), a: t("Yes! We offer easy bank EMI options starting from just ₹1,100 down payment. Government bank financing available.", "हाँ! हम सिर्फ ₹1,100 डाउन पेमेंट से शुरू होने वाले आसान बैंक EMI विकल्प प्रदान करते हैं।") },
   ];
 
+  const heroSlides = [
+    {
+      kicker: t("Simple Process", "सरल प्रक्रिया"),
+      title: t("How It Works", "यह कैसे काम करता है"),
+      subtitle: t("Simple, transparent, 6-step process from consultation to commissioning. We handle everything!", "परामर्श से कमीशनिंग तक सरल, पारदर्शी, 6-चरणीय प्रक्रिया। हम सब कुछ संभालते हैं!"),
+      image: subsidyImg,
+      range: "6 Steps",
+      chips: [t("Free Consultation", "निःशुल्क परामर्श"), t("End-to-End Support", "सम्पूर्ण सहायता"), t("Site Survey", "साइट सर्वे")],
+      visualTitle: t("Solar Journey", "सोलर यात्रा"),
+      visualItems: steps.slice(0, 3),
+      gradient: "from-slate-950 via-gray-950 to-blue-950",
+    },
+    {
+      kicker: t("Free Site Survey", "निःशुल्क साइट सर्वे"),
+      title: t("Survey & Assessment", "Survey और Assessment"),
+      subtitle: t("We check roof area, shadow-free space, structure strength, electricity load, and solar exposure before quote.", "Quote से पहले roof area, shadow-free space, structure strength, load और solar exposure check करते हैं।"),
+      image: subsidyImg,
+      range: "60 Sq.Ft / KW",
+      chips: [t("Roof Check", "Roof Check"), t("Load Study", "Load Study"), t("Free Visit", "Free Visit")],
+      visualTitle: t("Before Quote", "Quote से पहले"),
+      visualItems: steps.slice(1, 4),
+      gradient: "from-emerald-950 via-slate-950 to-gray-950",
+    },
+    {
+      kicker: t("Subsidy Support", "सब्सिडी सहायता"),
+      title: t("PM Surya Ghar Help", "PM Surya Ghar Help"),
+      subtitle: t("We handle subsidy paperwork, net metering coordination, and documentation for eligible residential projects.", "Eligible residential projects के लिए subsidy paperwork, net metering और documentation हम handle करते हैं।"),
+      image: subsidyImg,
+      range: "Up to ₹1.08L",
+      chips: [t("Paperwork", "Paperwork"), t("UPNEDA", "UPNEDA"), t("DISCOM", "DISCOM")],
+      visualTitle: t("Documentation", "Documentation"),
+      visualItems: steps.slice(3, 6),
+      gradient: "from-orange-950 via-slate-950 to-green-950",
+    },
+    {
+      kicker: t("Installation to Handover", "Installation से Handover"),
+      title: t("Commissioning Made Easy", "Commissioning आसान"),
+      subtitle: t("Certified installers complete mounting, wiring, inverter setup, testing, grid connection, and handover.", "Certified installers mounting, wiring, inverter setup, testing, grid connection और handover complete करते हैं।"),
+      image: subsidyImg,
+      range: "1-3 Days",
+      chips: [t("Installation", "Installation"), t("Testing", "Testing"), t("Handover", "Handover")],
+      visualTitle: t("Final Stage", "Final Stage"),
+      visualItems: [steps[4], steps[5], steps[0]],
+      gradient: "from-indigo-950 via-slate-950 to-zinc-950",
+    },
+  ];
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveHero((current) => (current + 1) % heroSlides.length);
+    }, 4500);
+
+    return () => window.clearInterval(timer);
+  }, [heroSlides.length]);
+
   return (
     <div>
       {/* Hero */}
-      <section className="relative min-h-[65vh] flex items-center pt-32 pb-20 overflow-hidden bg-gray-900 text-white">
-        <div className="absolute inset-0">
-          <img src={subsidyImg} alt="How It Works" className="w-full h-full object-cover opacity-30 scale-105" />
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/85 to-gray-900/60" />
-        </div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl">
-            <AnimatedSection direction="left">
-              <span className="inline-block px-4 py-1 rounded-full bg-primary/20 text-primary border border-primary/30 text-xs font-black tracking-[0.2em] uppercase mb-6">
-                {t("Simple Process", "सरल प्रक्रिया")}
-              </span>
-              <h1 className="text-5xl md:text-7xl font-heading font-black mb-6 leading-tight">
-                {t("How It Works", "यह कैसे काम करता है")}
-              </h1>
-              <p className="text-xl md:text-2xl opacity-90 leading-relaxed font-medium mb-8">
-                {t("Simple, transparent, 6-step process from consultation to commissioning. We handle everything!", "परामर्श से कमीशनिंग तक सरल, पारदर्शी, 6-चरणीय प्रक्रिया। हम सब कुछ संभालते हैं!")}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="px-6 py-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center gap-3 shrink-0">
-                  <CheckCircle className="w-5 h-5 text-primary" />
-                  <span className="font-bold text-base sm:text-lg">{t("Free Consultation", "निःशुल्क परामर्श")}</span>
-                </div>
-                <div className="px-6 py-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center gap-3 shrink-0">
-                  <CheckCircle className="w-5 h-5 text-primary" />
-                  <span className="font-bold text-base sm:text-lg">{t("End-to-End Support", "सम्पूर्ण सहायता")}</span>
+      <section className="relative overflow-hidden bg-slate-950 text-white">
+        <div className="relative h-[350px] sm:h-[410px] lg:h-[500px] xl:h-[590px]">
+          {heroSlides.map((slide, index) => (
+            <div
+              key={slide.title}
+              className={`absolute inset-0 bg-gradient-to-br ${slide.gradient} transition-opacity duration-700 ${activeHero === index ? "opacity-100" : "opacity-0"}`}
+              aria-hidden={activeHero !== index}
+            >
+              <img src={slide.image} alt="" className="absolute inset-0 h-full w-full object-cover opacity-24 mix-blend-screen" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/35 to-transparent" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_34%,rgba(255,255,255,0.16),transparent_34%)]" />
+
+              <div className="container relative z-10 mx-auto grid h-full grid-cols-1 items-center gap-6 px-4 md:grid-cols-[1fr_0.9fr]">
+                <motion.div
+                  initial={false}
+                  animate={activeHero === index ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+                  transition={{ duration: 0.45 }}
+                  className="max-w-3xl"
+                >
+                  <span className="mb-4 inline-block rounded-full border border-primary/35 bg-primary/20 px-4 py-2 text-xs font-black uppercase tracking-[0.2em] text-primary md:text-sm">
+                    {slide.kicker}
+                  </span>
+                  <h1 className="text-4xl font-heading font-black leading-[0.95] md:text-6xl xl:text-7xl">
+                    {slide.title}
+                  </h1>
+                  <p className="mt-4 max-w-2xl text-base font-semibold leading-relaxed text-white/82 md:text-xl">
+                    {slide.subtitle}
+                  </p>
+                  <div className="mt-5 inline-flex rounded-xl border border-white/35 bg-white/10 px-5 py-2 text-2xl font-black shadow-[0_0_18px_rgba(255,255,255,0.18)] backdrop-blur md:text-4xl">
+                    {slide.range}
+                  </div>
+                  <div className="mt-5 hidden flex-wrap gap-3 sm:flex">
+                    {slide.chips.map((chip) => (
+                      <span key={chip} className="rounded-xl border border-white/25 bg-white/10 px-4 py-2 text-sm font-bold text-white/90 backdrop-blur">
+                        {chip}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+
+                <div className="hidden rounded-[2rem] border border-white/10 bg-white/[0.06] p-5 shadow-2xl backdrop-blur-xl md:block">
+                  <p className="mb-4 text-xs font-black uppercase tracking-[0.22em] text-primary">{slide.visualTitle}</p>
+                  <div className="space-y-3">
+                    {slide.visualItems.map((item) => (
+                      <div key={`${slide.title}-${item.num}`} className="flex items-center gap-4 rounded-2xl bg-white/10 p-4">
+                        <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${item.color}`}>
+                          <item.icon className="h-6 w-6 text-white" />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-xs font-black uppercase tracking-[0.16em] text-white/50">{t("Step", "चरण")} {item.num}</p>
+                          <p className="truncate text-lg font-black text-white">{item.title}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </AnimatedSection>
+            </div>
+          ))}
+
+          <div className="absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3">
+            {heroSlides.map((slide, index) => (
+              <button
+                key={slide.title}
+                type="button"
+                onClick={() => setActiveHero(index)}
+                className={`h-3 w-3 rounded-full border-2 border-white transition-all ${activeHero === index ? "bg-transparent ring-2 ring-white/70" : "bg-white"}`}
+                aria-label={`Show process banner ${index + 1}`}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -170,7 +269,7 @@ const HowItWorks = () => {
         <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <AnimatedSection direction="left" className="relative max-w-md mx-auto lg:mx-0">
+            <AnimatedSection direction="left" className="relative w-full max-w-2xl mx-auto lg:mx-0">
               <div className="aspect-video rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden shadow-2xl border-4 sm:border-8 border-white">
                 <img src={subsidyImg} alt="Government Subsidy" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900/20 to-transparent rounded-[2rem] sm:rounded-[2.5rem]" />
