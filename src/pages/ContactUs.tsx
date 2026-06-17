@@ -235,7 +235,7 @@ const ContactUs = () => {
                     <div className="py-2">
                       <ReCAPTCHA
                         ref={recaptchaRef}
-                        sitekey="6LfJpHksAAAAAOmvg8nMVEOLmGlsWZQIUbrSXCZZ"
+                        sitekey="6LcI9SQtAAAAAJ8ES-XR0bj74mefmiUhQ70GILGa"
                         onChange={(token) => setCaptchaToken(token)}
                       />
                     </div>
